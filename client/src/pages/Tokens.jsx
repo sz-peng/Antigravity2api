@@ -89,13 +89,13 @@ export default function Tokens() {
                 code = new URL(manualUrl).searchParams.get('code');
             }
 
-            const res = await fetch('/admin/tokens', {
+            const res = await fetch('/admin/tokens/callback', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Admin-Token': adminToken
                 },
-                body: JSON.stringify({ url: manualUrl })
+                body: JSON.stringify({ callbackUrl: manualUrl })
             });
             const data = await res.json();
             if (data.success) {

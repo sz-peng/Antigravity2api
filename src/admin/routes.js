@@ -203,6 +203,19 @@ router.patch('/tokens/:index', async (req, res) => {
   }
 });
 
+// 启用/禁用账号 (POST方法支持)
+router.post('/tokens/toggle', async (req, res) => {
+  try {
+    const { index, enable } = req.body;
+    await toggleAccount(index, enable);
+    await addLog('info', `Token 账号 ${index} 已${enable ? '启用' : '禁用'}`);
+    res.json({ success: true });
+  } catch (error) {
+    await addLog('error', `切换 Token 状态失败: ${error.message}`);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // 触发登录流程
 router.post('/tokens/login', async (req, res) => {
   try {
